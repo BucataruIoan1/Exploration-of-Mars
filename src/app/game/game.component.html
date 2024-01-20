@@ -1,0 +1,23 @@
+<div class="game-section">
+    <div class="characters-section">
+        <div class="explorer-section" *ngIf="explorer">
+            <div class="character-image">👨‍🚀 - <span class="character-type">Explorer</span></div>
+            <span>NAME: {{ explorer.name }}</span>
+            <span>HP: {{ explorer.hp }}</span>
+            <span>ARMOUR: {{ explorer.armour }}</span>
+        </div>
+        <div class="doctor-section" *ngIf="doctor">
+            <div class="character-image">👨‍⚕️ - <span class="character-type">Doctor</span></div>
+            <span>NAME: {{ doctor.name }}</span>
+            <span>HP: {{ doctor.hp }}</span>
+            <span>ARMOUR: {{ doctor.armour }}</span>
+        </div>
+        <div class="engineer-section" *ngIf="engineer">
+            <div class="character-image">👷 - <span class="character-type">Engineer</span></div>
+            <span>NAME: {{ engineer.name }}</span>
+            <span>HP: {{ engineer.hp }}</span>
+            <span>ARMOUR: {{ engineer.armour }}</span>
+        </div>
+    </div>
+    <div class="board-section"></div>
+</div>

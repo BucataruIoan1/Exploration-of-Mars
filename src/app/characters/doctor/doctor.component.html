@@ -1,0 +1,20 @@
+<div class="doctor-section" [formGroup]="doctorForm">
+    <div class="doctor-input-section">
+        <div class="doctor-name-section">
+            <p>Please introduce a name for the doctor</p>
+            <div class="doctor-image">👨‍⚕️</div>
+            <input class="doctor-name" type="text" formControlName="doctorName">
+            <div *ngIf="isNameInvalid" class="invalid-name">
+                {{errorMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="buttons-section">
+        <div (click)="moveToExplorer()">
+            <mat-icon class="mat-icon-xl left-arrow">keyboard_arrow_left</mat-icon>
+        </div>
+        <div (click)="moveToEngineerStep()">
+            <mat-icon class="mat-icon-xl right-arrow">keyboard_arrow_right</mat-icon>
+        </div>
+    </div>
+</div>

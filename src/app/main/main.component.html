@@ -1,12 +1,15 @@
-<div class="intro-section">
+<div *ngIf="!gameService.isGameStarted">
+  <div class="intro-section">
     <div class="title-section">
-        <h1>Exploration of Mars</h1>
+      <h1>Exploration of Mars</h1>
     </div>
     <div class="options-menu">
-        <ul class="options-list">
-            <li class="option-game">Start Game</li>
-            <li class="option-game">About the Game</li>
-            <li class="option-game">Contact</li>
-        </ul>
+      <ul class="options-list">
+        <li class="option-game" (click)="startGame()">Start Game</li>
+        <li class="option-game">About the Game</li>
+        <li class="option-game">Contact</li>
+      </ul>
     </div>
+  </div>
 </div>
+<app-characters></app-characters>

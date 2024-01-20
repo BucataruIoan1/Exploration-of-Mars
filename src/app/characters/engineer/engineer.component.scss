@@ -1,0 +1,77 @@
+@import '../../../styles.scss';
+
+.engineer-section {
+  height: 100vh;
+  background: url('../../../images/mars.png.jpg') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.engineer-input-section {
+  height: 45%;
+  width: 40%;
+  background: url('../../../images/mars.png.jpg') center/cover;
+  opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7.5vh;
+}
+
+.engineer-name-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.engineer-name-section p {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.engineer-name {
+  height: 3.5vh;
+  width: 75%;
+  margin-top: 0.5rem;
+}
+
+.buttons-section {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.left-arrow, .right-arrow {
+  margin: 0px 1rem 1rem 1rem;
+  font-size: 2rem;
+  color: $pink-beige;
+  cursor: pointer;
+}
+
+.left-arrow:hover {
+  color: $dark-brown;
+  cursor: pointer;
+}
+
+.right-arrow:hover {
+  color: $dark-brown;
+  cursor: pointer;
+}
+
+.invalid-name {
+  color: #fff;
+  background-color: red;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.engineer-image {
+  margin: 0.5rem;
+  font-size: 2rem;
+}

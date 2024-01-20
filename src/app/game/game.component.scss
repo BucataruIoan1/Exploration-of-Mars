@@ -1,0 +1,46 @@
+@import '../../styles.scss';
+
+.game-section {
+  height: 100vh;
+  background: url('../../images/mars.png.jpg') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.characters-section {
+    display: flex;
+    height: 90%;
+    width: 30%;
+    margin: 1rem;
+    color: $pink-beige;
+    flex-direction: column;
+}
+
+.board-section {
+    height: 90%;
+    width: 70%;
+    margin: 1rem;
+    border: 1px solid black;
+}
+
+.character-image {
+    margin: 1rem 0px 1rem 0px;
+    font-size: 2rem;
+    display: flex;
+    gap: 10px;
+}
+
+.explorer-section, .doctor-section, .engineer-section {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-section {
+    color: $dark-brown;
+}
+
+.character-type {
+    font-size: 1rem;
+}

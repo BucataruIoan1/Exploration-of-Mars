@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { fromEvent } from 'rxjs';
 import { GameService } from '../services/game.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -9,23 +8,18 @@ import { GameService } from '../services/game.service';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    public gameService: GameService
-  ) {}
+  isGameStarted: boolean = false;
+
+  constructor(public gameService: GameService, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.url.subscribe((urlSegments) => {
-      if (urlSegments.length === 0) {
-        this.gameService.isGameStarted = false;
-      }
+    this.gameService.isGameStarted$.subscribe((isGameStarted: boolean) => {
+      this.isGameStarted = isGameStarted;
     });
   }
 
   startGame(): void {
-    this.gameService.isGameStarted = true;
-    this.router.navigate(['choose-explorer']);
+    this.gameService.startGame();
+    this.router.navigate(['/choose-explorer']);
   }
-  
 }

@@ -3,10 +3,10 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { ExplorerComponent } from "./explorer/explorer.component";
 import { CharactersComponent } from "./characters.component";
-import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DoctorComponent } from './doctor/doctor.component';
 import { EngineerComponent } from './engineer/engineer.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -18,9 +18,9 @@ import { EngineerComponent } from './engineer/engineer.component';
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ],
   exports: [CharactersComponent]
 })

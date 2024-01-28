@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GameService } from './services/game.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameComponent } from './game/game.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { GameComponent } from './game/game.component';
     CharactersModule,
     RouterModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatIconModule
   ],
   providers: [GameService],
   bootstrap: [AppComponent]

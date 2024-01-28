@@ -1,23 +1,38 @@
 <div class="game-section">
-    <div class="characters-section">
-        <div class="explorer-section" *ngIf="explorer">
-            <div class="character-image">👨‍🚀 - <span class="character-type">Explorer</span></div>
-            <span>NAME: {{ explorer.name }}</span>
-            <span>HP: {{ explorer.hp }}</span>
-            <span>ARMOUR: {{ explorer.armour }}</span>
+  <div class="characters-section">
+    <ng-container *ngFor="let character of characters">
+      <div class="{{ character.type }}-section">
+        <div class="character-image">
+          {{ character.avatar }} - <span class="character-type"> {{ character.type | titlecase}} </span>
         </div>
-        <div class="doctor-section" *ngIf="doctor">
-            <div class="character-image">👨‍⚕️ - <span class="character-type">Doctor</span></div>
-            <span>NAME: {{ doctor.name }}</span>
-            <span>HP: {{ doctor.hp }}</span>
-            <span>ARMOUR: {{ doctor.armour }}</span>
+        <span>NAME: {{ character.name }}</span>
+        <span>HP: {{ character.hp }}</span>
+        <span>ARMOUR: {{ character.armour }}</span>
+      </div>
+    </ng-container>
+  </div>
+  <div class="board-section">
+    <div *ngFor="let row of board; let i = index" class="board-row">
+      <div *ngFor="let box of row; let j = index" class="board-box"
+        [ngClass]="{
+          'explored-box': box === 'explored',
+          'unexplored-box': box === 'unexplored',
+          'current-character-box': isCurrentCharacterPosition(i, j),
+          'disabled-box': !isAdjacentPosition(i, j) || box === 'explored'
+        }"
+        (click)="onBoxClick(i, j)">
+        <div class="characters-box">
+          <ng-container *ngFor="let character of characters">
+            <div class="player-box" *ngIf="character && character.position?.row === i && character.position?.col === j">
+              <mat-icon [style.visibility]="currentPlayer === character.type ? 'visible' : 'hidden'" class="current-player-arrow">
+                keyboard_arrow_down
+              </mat-icon>
+              <span>{{ character.type === 'explorer' ? '👨‍🚀' : (character.type === 'doctor' ? '👨‍⚕️' : '👷') }}</span>
+
+            </div>
+          </ng-container>
         </div>
-        <div class="engineer-section" *ngIf="engineer">
-            <div class="character-image">👷 - <span class="character-type">Engineer</span></div>
-            <span>NAME: {{ engineer.name }}</span>
-            <span>HP: {{ engineer.hp }}</span>
-            <span>ARMOUR: {{ engineer.armour }}</span>
-        </div>
+      </div>
     </div>
-    <div class="board-section"></div>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/characters.service';
@@ -13,13 +13,41 @@ export class EngineerComponent {
   isNameInvalid: boolean = false;
   errorMessage: string = '';
   isLeftArrowDisabled = true;
-  engineerName: string = ''
 
-  constructor(private fb: FormBuilder, private router: Router, private charactersService: CharactersService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private charactersService: CharactersService
+  ) {
     this.engineerForm = this.fb.group({
       engineerName: ['', [Validators.required, this.customNameValidator]]
     });
-    this.engineerName = this.charactersService.getEngineerName();
+
+    this.charactersService.getEngineerObservable().subscribe((engineer) => {
+      if (engineer) {
+        this.isLeftArrowDisabled = false;
+      }
+    });
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.onEnterKeyPress();
+    }
+  }
+
+  onEnterKeyPress() {
+    const engineerNameControl = this.engineerForm.get('engineerName');
+    if (engineerNameControl) {
+      if (engineerNameControl.valid) {
+        const inputVal = engineerNameControl.value;
+        this.charactersService.setNameAndCharacter('engineer', inputVal, '👨‍🔧');
+        this.router.navigate(['game']);
+      } else {
+        this.isNameInvalid = true;
+      }
+    }
   }
 
   customNameValidator = (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -28,7 +56,7 @@ export class EngineerComponent {
     const hasDigit = /\d/.test(value);
     const containsOnlyDigits = /^\d+$/.test(value);
     const containsAtLeastThreeLetters = /[a-zA-Z].*[a-zA-Z].*[a-zA-Z]/.test(value);
-  
+
     this.errorMessage =
       !hasMinLength && !hasDigit
         ? 'Please enter a name that has at least 3 characters and 1 digit.'
@@ -39,35 +67,23 @@ export class EngineerComponent {
         : !hasDigit
         ? 'Please enter a name that has at least 1 digit.'
         : '';
-  
-        if (hasMinLength && hasDigit && containsAtLeastThreeLetters && !containsOnlyDigits) {
-          this.isNameInvalid = false;
-          this.errorMessage = '';
-          return null;
-        }
-      
-        return { 'invalidName': true };
+
+    if (hasMinLength && hasDigit && containsAtLeastThreeLetters && !containsOnlyDigits) {
+      this.isNameInvalid = false;
+      this.errorMessage = '';
+      return null;
+    }
+
+    return { 'invalidName': true };
   };
-  
+
   moveToGame() {
     const engineerNameControl = this.engineerForm.get('engineerName');
     if (engineerNameControl) {
       if (engineerNameControl.valid) {
         const inputVal = engineerNameControl.value;
-        this.isLeftArrowDisabled = false;
-        this.charactersService.setEngineerName(inputVal);
-
-        const engineer = {
-          name: inputVal,
-          canExplore: false,
-          canHeal: false,
-          canRepairArmour: true,
-          hp: 100,
-          armour: 100
-        };
-        this.charactersService.setEngineer(engineer);
+        this.charactersService.setNameAndCharacter('engineer', inputVal, '👨‍🔧');
         this.router.navigate(['game']);
-
       } else {
         this.isNameInvalid = true;
       }

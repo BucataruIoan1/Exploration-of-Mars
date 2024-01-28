@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/characters.service';
 
 @Component({
@@ -13,18 +13,41 @@ export class ExplorerComponent {
   isNameInvalid: boolean = false;
   errorMessage: string = '';
   isLeftArrowDisabled = true;
-  explorerName: string = '';
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router, 
-    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private router: Router,
     private charactersService: CharactersService
-    ) {
+  ) {
     this.explorerForm = this.fb.group({
       explorerName: ['', [Validators.required, this.customNameValidator]]
     });
-    this.explorerName = this.charactersService.getExplorerName();
+
+    this.charactersService.getExplorerObservable().subscribe((explorer) => {
+      if (explorer) {
+        this.isLeftArrowDisabled = false;
+      }
+    });
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.onEnterKeyPress();
+    }
+  }
+
+  onEnterKeyPress() {
+    const explorerNameControl = this.explorerForm.get('explorerName');
+    if (explorerNameControl) {
+      if (explorerNameControl.valid) {
+        const inputVal = explorerNameControl.value;
+        this.charactersService.setNameAndCharacter('explorer', inputVal, '👨‍🚀');
+        this.router.navigate(['choose-doctor']);
+      } else {
+        this.isNameInvalid = true;
+      }
+    }
   }
 
   customNameValidator = (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -33,7 +56,7 @@ export class ExplorerComponent {
     const hasDigit = /\d/.test(value);
     const containsOnlyDigits = /^\d+$/.test(value);
     const containsAtLeastThreeLetters = /[a-zA-Z].*[a-zA-Z].*[a-zA-Z]/.test(value);
-  
+
     this.errorMessage =
       !hasMinLength && !hasDigit
         ? 'Please enter a name that has at least 3 characters and 1 digit.'
@@ -44,40 +67,26 @@ export class ExplorerComponent {
         : !hasDigit
         ? 'Please enter a name that has at least 1 digit.'
         : '';
-  
-        if (hasMinLength && hasDigit && containsAtLeastThreeLetters && !containsOnlyDigits) {
-          this.isNameInvalid = false;
-          this.errorMessage = '';
-          return null;
-        }
-      
-        return { 'invalidName': true };
+
+    if (hasMinLength && hasDigit && containsAtLeastThreeLetters && !containsOnlyDigits) {
+      this.isNameInvalid = false;
+      this.errorMessage = '';
+      return null;
+    }
+
+    return { 'invalidName': true };
   };
-  
+
   moveToDoctorStep() {
     const explorerNameControl = this.explorerForm.get('explorerName');
     if (explorerNameControl) {
       if (explorerNameControl.valid) {
         const inputVal = explorerNameControl.value;
-        this.isLeftArrowDisabled = false;
-        this.charactersService.setExplorerName(inputVal);
-
-        const explorer = {
-          name: inputVal,
-          canExplore: false,
-          canHeal: false,
-          canRepairArmour: false,
-          hp: 100,
-          armour: 100
-        };
-        this.charactersService.setExplorer(explorer);
+        this.charactersService.setNameAndCharacter('explorer', inputVal, '👨‍🚀');
         this.router.navigate(['choose-doctor']);
       } else {
         this.isNameInvalid = true;
       }
     }
-  
   }
-  
-  
 }

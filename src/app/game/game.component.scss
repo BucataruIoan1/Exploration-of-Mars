@@ -1,46 +1,128 @@
-@import '../../styles.scss';
+@import "../../styles.scss";
 
 .game-section {
   height: 100vh;
-  background: url('../../images/mars.png.jpg') center/cover;
+  background: url("../../images/mars.png.jpg") center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .characters-section {
-    display: flex;
-    height: 90%;
-    width: 30%;
-    margin: 1rem;
-    color: $pink-beige;
-    flex-direction: column;
-}
-
-.board-section {
-    height: 90%;
-    width: 70%;
-    margin: 1rem;
-    border: 1px solid black;
+  display: flex;
+  height: 90%;
+  width: 30%;
+  margin: 1rem;
+  color: $pink-beige;
+  flex-direction: column;
 }
 
 .character-image {
-    margin: 1rem 0px 1rem 0px;
-    font-size: 2rem;
-    display: flex;
-    gap: 10px;
+  margin: 1rem 0px 1rem 0px;
+  font-size: 2rem;
+  display: flex;
+  gap: 10px;
 }
 
-.explorer-section, .doctor-section, .engineer-section {
-    margin: 1rem;
-    display: flex;
-    flex-direction: column;
+.explorer-section,
+.doctor-section,
+.engineer-section {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .doctor-section {
-    color: $dark-brown;
+  color: $dark-brown;
 }
 
 .character-type {
-    font-size: 1rem;
+  font-size: 1rem;
+}
+
+.board-section {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 1rem;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.board-row {
+  display: flex;
+  flex: 1;
+}
+
+.characters-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.explorer-box,
+.doctor-box,
+.engineer-box {
+  width: 30px;
+  text-align: center;
+}
+
+.explored-box {
+  background-color: transparent;
+}
+
+.unexplored-box {
+  background-color: $intense-orange;
+}
+
+.current-character-box {
+  background-color: transparent;
+}
+
+.disabled-box.explored-box {
+  background-color: transparent;
+}
+
+.disabled-box.unexplored-box {
+  background-color: $intense-orange;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.player-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.current-player-arrow {
+  transform: translateY(-50%);
+  color: $pink-beige;
+  animation: bounce 0.6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(-60%);
+  }
+}
+
+.board-box {
+  flex: 1;
+  border: 1px solid #000;
+  margin: 2px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
 }

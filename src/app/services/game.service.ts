@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
+  public isGameStartedSource = new BehaviorSubject<boolean>(false);
+  isGameStarted$ = this.isGameStartedSource.asObservable();
+
   constructor() { }
 
-  isGameStarted: boolean = false;
+  startGame(): void {
+    this.isGameStartedSource.next(true);
+  }
 
-  starGame(): void {
-    this.isGameStarted = !this.isGameStarted
+  stopGame(): void {
+    this.isGameStartedSource.next(false);
   }
 }

@@ -8,6 +8,10 @@
   justify-content: center;
 }
 
+.colony-discovered-box {
+  background: url("../../images/mars-colony.png.png") center/cover;
+}
+
 .characters-section {
   display: flex;
   height: 90%;
@@ -125,4 +129,65 @@
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
+}
+
+.options-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.buttons-section {
+  display: flex;
+  gap: 10px;
+}
+
+.option {
+  width: 25%;
+  height: 5vh;
+  cursor: pointer;
+  background-color: $light-orange;
+  color: $pink-beige;
+  border: none;
+  font-size: 1.25rem;
+}
+
+.option:hover {
+  background-color: $yellow-orange;
+}
+
+.error-message {
+  color: #fff;
+  background-color: red;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.selected-option,
+.disabled-option {
+  display: block;
+  width: 25%;
+  height: 5vh;
+  cursor: pointer;
+  background-color: $light-orange;
+  color: $pink-beige;
+  border: none;
+  font-size: 1.25rem;
+}
+
+.selected-option {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.disabled-option {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.restart-game {
+  position: absolute;
+  bottom: 1rem;
 }

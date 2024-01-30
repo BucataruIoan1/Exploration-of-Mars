@@ -1,0 +1,29 @@
+@import "../../../styles.scss";
+
+.colony-discovered-section {
+    background: url("../../../images/mars.png.jpg") center/cover;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.victory-text {
+    color: $dark-brown;
+    font-size: 2rem;
+}
+
+.option {
+    width: 25%;
+    height: 5vh;
+    cursor: pointer;
+    background-color: $light-orange;
+    color: $pink-beige;
+    border: none;
+    font-size: 1.25rem;
+  }
+
+  .option:hover {
+    background-color: $yellow-orange;
+  }

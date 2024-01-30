@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Character } from '../interfaces/explorer.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class CharactersService {
   doctor$ = this.doctorSubject.asObservable();
   engineer$ = this.engineerSubject.asObservable();
 
-  constructor() {
+  constructor(private router: Router) {
     this.loadGameState();
   }
 
@@ -123,4 +124,5 @@ export class CharactersService {
     this.doctorSubject.next(this.characters['doctor']);
     this.engineerSubject.next(this.characters['engineer']);
   }
+
 }

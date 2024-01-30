@@ -10,12 +10,16 @@ import { GameService } from './services/game.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameComponent } from './game/game.component';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthGuard } from './auth/auth-guard.service';
+import { ColonyDiscoveredDialogComponent } from './dialog/colony-discovered-dialog/colony-discovered-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    GameComponent
+    GameComponent,
+    ColonyDiscoveredDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,9 +27,10 @@ import { MatIconModule } from '@angular/material/icon';
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
   ],
-  providers: [GameService],
+  providers: [GameService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

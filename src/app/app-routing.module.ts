@@ -5,32 +5,38 @@ import { CharactersComponent } from './characters/characters.component';
 import { DoctorComponent } from './characters/doctor/doctor.component';
 import { EngineerComponent } from './characters/engineer/engineer.component';
 import { GameComponent } from './game/game.component';
+import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent
+    component: MainComponent,
+    pathMatch: 'full'
   },
   {
     path: 'choose-explorer',
-    component: CharactersComponent
+    component: CharactersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'choose-doctor',
-    component: DoctorComponent
+    component: DoctorComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'choose-engineer',
-    component: EngineerComponent
+    component: EngineerComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'game',
-    component: GameComponent
-  },
+    component: GameComponent,
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {}

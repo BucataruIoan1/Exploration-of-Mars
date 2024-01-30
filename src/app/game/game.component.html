@@ -10,6 +10,26 @@
         <span>ARMOUR: {{ character.armour }}</span>
       </div>
     </ng-container>
+    <div class="options-section">
+      <div class="buttons-section">
+        <button
+          mat-stroked-button
+          class="option"
+          *ngFor="let option of getAvailableOptions()"
+          (click)="onOptionSelect(option)"
+          [ngClass]="{'selected-option': isOptionSelected && option === selectedOption, 'disabled-option': isOptionSelected && option !== selectedOption}"
+        >
+          {{ option }}
+        </button>
+      </div>
+      
+      <div *ngIf="showErrorMessage" class="error-message">
+        Please first select an action.
+      </div>
+    </div>
+    <button mat-stroked-button class="option restart-game" *ngIf="isColonyDiscovered && isDialogClosed" (click)="restartGame()">Restart Game</button>
+
+
   </div>
   <div class="board-section">
     <div *ngFor="let row of board; let i = index" class="board-row">
@@ -18,13 +38,14 @@
           'explored-box': box === 'explored',
           'unexplored-box': box === 'unexplored',
           'current-character-box': isCurrentCharacterPosition(i, j),
-          'disabled-box': !isAdjacentPosition(i, j) || box === 'explored'
+          'disabled-box': !isAdjacentPosition(i, j) || box === 'explored',
+          'colony-discovered-box': isColonyDiscovered && i === 3 && j === 3
         }"
         (click)="onBoxClick(i, j)">
         <div class="characters-box">
           <ng-container *ngFor="let character of characters">
             <div class="player-box" *ngIf="character && character.position?.row === i && character.position?.col === j">
-              <mat-icon [style.visibility]="currentPlayer === character.type ? 'visible' : 'hidden'" class="current-player-arrow">
+              <mat-icon [style.visibility]="currentPlayer === character.type ? 'visible' : 'hidden'" class="current-player-arrow" *ngIf="!isColonyDiscovered">
                 keyboard_arrow_down
               </mat-icon>
               <span>{{ character.type === 'explorer' ? '👨‍🚀' : (character.type === 'doctor' ? '👨‍⚕️' : '👷') }}</span>

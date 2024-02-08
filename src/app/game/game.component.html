@@ -1,17 +1,62 @@
 <div class="game-section">
   <div class="characters-section">
     <ng-container *ngFor="let character of characters">
-      <div class="{{ character.type }}-section">
+      <div class="{{ character.type }}-section" [ngClass]="{'disabled-character': isCharacterDead(character)}">
         <div class="character-image">
-          {{ character.avatar }} - <span class="character-type"> {{ character.type | titlecase}} </span>
+          {{ character?.avatar }} - <span class="character-type"> {{ character?.type | titlecase}} </span>
         </div>
-        <span>NAME: {{ character.name }}</span>
-        <span>HP: {{ character.hp }}</span>
-        <span>ARMOUR: {{ character.armour }}</span>
+        <span>NAME: {{ character?.name }}</span>
+        <span>HP: {{ isCharacterDead(character) ? 0 : character?.hp }}</span>
+        <span>ARMOUR: {{ character?.armour }}</span>
+
+
+
+        <ng-container *ngIf="character.type === 'doctor'">
+          <ng-container *ngIf="selectedOption === 'Heal' && currentPlayer === 'doctor'">
+          <span *ngIf="doctor && explorer && areCharactersOnSamePosition(doctor, explorer)">
+            <div class="checkbox-wrapper-13 checkbox-section-explorer">
+              <input id="c1-13" type="checkbox" [(ngModel)]="explorerHealCheckbox" (change)="onExplorerCheckboxChange()">
+              <label for="c1-13">Heal Explorer</label>
+            </div>
+
+          </span>
+          </ng-container>
+
+          <ng-container *ngIf="selectedOption === 'Heal' && currentPlayer === 'doctor'">
+            <span *ngIf="doctor && engineer && areCharactersOnSamePosition(doctor, engineer)">
+              <div class="checkbox-wrapper-13 checkbox-section-explorer">
+                <input id="c1-13" type="checkbox" [(ngModel)]="engineerHealCheckbox" (change)="onEngineerCheckboxChange()">
+                <label for="c1-13">Heal Engineer</label>
+              </div>
+            </span>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="character.type === 'engineer'">
+          <ng-container *ngIf="selectedOption === 'Repair' && currentPlayer === 'engineer'">
+          <span *ngIf="engineer && explorer && areCharactersOnSamePosition(engineer, explorer)">
+            <div class="checkbox-wrapper-13 checkbox-section-explorer">
+              <input id="c1-13" type="checkbox" [(ngModel)]="explorerRepairCheckbox" (change)="onExplorerCheckboxChangeRepair()">
+              <label for="c1-13">Repair Explorer Armour</label>
+            </div>
+
+          </span>
+          </ng-container>
+
+          <ng-container *ngIf="selectedOption === 'Repair' && currentPlayer === 'engineer'">
+            <span *ngIf="engineer && doctor && areCharactersOnSamePosition(engineer, doctor)">
+              <div class="checkbox-wrapper-13 checkbox-section-explorer">
+                <input id="c1-13" type="checkbox" [(ngModel)]="doctorRepairCheckbox" (change)="onDoctorCheckboxChange()">
+                <label for="c1-13">Repair Doctor Armour</label>
+              </div>
+            </span>
+          </ng-container>
+        </ng-container>
+
       </div>
     </ng-container>
     <div class="options-section">
-      <div class="buttons-section">
+      <div class="buttons-section" *ngIf="atLeastOneCharacterAlive()">
         <button
           mat-stroked-button
           class="option"
@@ -24,10 +69,10 @@
       </div>
       
       <div *ngIf="showErrorMessage" class="error-message">
-        Please first select an action.
+        {{ getErrorMessage() }}
       </div>
     </div>
-    <button mat-stroked-button class="option restart-game" *ngIf="isColonyDiscovered && isDialogClosed" (click)="restartGame()">Restart Game</button>
+    <button mat-stroked-button class="option restart-game" *ngIf="(isColonyDiscovered && this.dialogService.isDialogClosed) || !atLeastOneCharacterAlive()" (click)="restartGame()">Restart Game</button>
 
 
   </div>
@@ -39,16 +84,24 @@
           'unexplored-box': box === 'unexplored',
           'current-character-box': isCurrentCharacterPosition(i, j),
           'disabled-box': !isAdjacentPosition(i, j) || box === 'explored',
-          'colony-discovered-box': isColonyDiscovered && i === 3 && j === 3
+          'colony-discovered-box': isColonyDiscovered && i === 3 && j === 3,
+          'mars-cliffs-box': i === 0 && j === 2 && box === 'explored',
+          'mars-storm-box': (i === 0 && j === 0 && box === 'explored') || (i === 2 && j === 3 && box === 'explored') || (i === 4 && j === 4 && box === 'explored'),
+          'mars-radiation-box': (i === 3 && j === 1 && box === 'explored') || (i === 1 && j === 3 && box === 'explored'),
+          'mars-aliens-box': (i === 1 && j === 2 && box === 'explored') || (i === 2 && j === 1 && box === 'explored'),
+          'mars-boss-box': (i === 4 && j === 2 && box === 'explored')
         }"
         (click)="onBoxClick(i, j)">
         <div class="characters-box">
           <ng-container *ngFor="let character of characters">
             <div class="player-box" *ngIf="character && character.position?.row === i && character.position?.col === j">
-              <mat-icon [style.visibility]="currentPlayer === character.type ? 'visible' : 'hidden'" class="current-player-arrow" *ngIf="!isColonyDiscovered">
+              <mat-icon [style.visibility]="currentPlayer === character.type ? 'visible' : 'hidden'" class="current-player-arrow" *ngIf="!isColonyDiscovered && character.hp > 0">
                 keyboard_arrow_down
               </mat-icon>
-              <span>{{ character.type === 'explorer' ? '👨‍🚀' : (character.type === 'doctor' ? '👨‍⚕️' : '👷') }}</span>
+              <span *ngIf="character.type === 'explorer' && character.hp > 0">👨‍🚀</span>
+              <span *ngIf="character.type === 'doctor' && character.hp > 0">👨‍⚕️</span>
+              <span *ngIf="character.type === 'engineer' && character.hp > 0">👷</span>
+              
 
             </div>
           </ng-container>
@@ -56,4 +109,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> 

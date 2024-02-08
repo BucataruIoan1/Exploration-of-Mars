@@ -13,6 +13,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthGuard } from './auth/auth-guard.service';
 import { ColonyDiscoveredDialogComponent } from './dialog/colony-discovered-dialog/colony-discovered-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DangerDialogComponent } from './dialog/danger-dialog/danger-dialog.component';
+import { GameOverDialogComponent } from './dialog/game-over-dialog/game-over-dialog.component';
+import { FormsModule } from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MainComponent,
     GameComponent,
     ColonyDiscoveredDialogComponent,
+    DangerDialogComponent,
+    GameOverDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +35,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     BrowserAnimationsModule,
     MatIconModule,
     MatDialogModule,
+    FormsModule,
+    MatCheckboxModule
   ],
   providers: [GameService, AuthGuard],
   bootstrap: [AppComponent]

@@ -1,0 +1,31 @@
+<div
+  class="danger-section"
+  [ngClass]="
+    trapType === 'Aliens'
+      ? 'aliens-section'
+      : trapType === 'DarthVader'
+      ? 'darth-vader-section'
+      : trapType === 'Cliffs'
+      ? 'cliffs-section'
+      : trapType === 'Radiation'
+      ? 'radiation-section'
+      : 'storm-dust-section'
+  "
+>
+<h1 class="victory-text">
+  {{
+    trapType === "DarthVader"
+      ? "Ohhhh, no! You've encountered Darth Vader  who has killed you. Now, hope rests in the hands of the other crew members to find the lost colony."
+      : trapType === "Aliens"
+      ? "Ohhh, no! You've just been attacked by a group of aliens. Visit the medic if you think the injuries are serious."
+      : trapType === "Cliffs"
+      ? "Ohhh, no! You've just fallen off a cliff and injured yourself quite badly. Seek the medic for assistance."
+      : trapType === "Radiation"
+      ? "Ohhh, no! You've entered an area with high radiation ☢️, and your armor has suffered significant damage. Go and visit the engineer to help you repair it."
+      : "Ohhh, no! You've just been caught in a sandstorm  that caused some damage. Please visit the medic to assess the injuries."
+  }}
+</h1>
+  <button mat-stroked-button class="option" (click)="closeDialog()">
+    Close
+  </button>
+</div>

@@ -1,0 +1,56 @@
+@import "../../../styles.scss";
+
+.danger-section {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .darth-vader-section {
+    background: url("../../../images/darth-vader-dialog.png");
+    background-size: cover;
+  }
+  
+  .aliens-section {
+    background: url("../../../images/aliens-dialog.png.jpg");
+    background-size: cover;
+  }
+
+  .cliffs-section {
+    background: url("../../../images/mars-cliffs-dialog.png.png");
+    background-size: cover;
+  }
+
+  .radiation-section {
+    background: url("../../../images/radiation-dialog.png.png");
+    background-size: cover;
+  }
+
+  .storm-dust-section {
+    background: url("../../../images/storm-dust-dialog.png.png");
+    background-size: cover;
+  }
+  
+.victory-text {
+    color: $yellow-orange;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.option {
+    width: 25%;
+    height: 5vh;
+    cursor: pointer;
+    background-color: $light-orange;
+    color: $pink-beige;
+    border: none;
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .option:hover {
+    background-color: $yellow-orange;
+  }

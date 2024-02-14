@@ -47,26 +47,6 @@ export class GameUtilsService {
     }
   }
 
-  getBoxType(row: number, col: number): string | null {
-    if (
-      (row === 0 && col === 0) ||
-      (row === 2 && col === 3) ||
-      (row === 4 && col === 4)
-    ) {
-      return 'STORM-DUST';
-    } else if ((row === 3 && col === 1) || (row === 1 && col === 3)) {
-      return 'RADIATION';
-    } else if ((row === 1 && col === 2) || (row === 2 && col === 1)) {
-      return 'ALIENS';
-    } else if (row === 0 && col === 2) {
-      return 'CLIFFS';
-    } else if (row === 4 && col === 2) {
-      return 'BOSS';
-    }
-
-    return null;
-  }
-
   getAvailableOptions(currentPlayer: string | undefined, characters: Character[], isColonyDiscovered: boolean, areCharactersOnSamePosition: Function): string[] {
     const explorer = characters.find((character: any) => character.type === 'explorer');
     const doctor = characters.find((character: any) => character.type === 'doctor');

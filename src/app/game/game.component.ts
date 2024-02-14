@@ -35,6 +35,12 @@ export class GameComponent implements OnInit {
   explorerRepairCheckbox: boolean = false;
   doctorRepairCheckbox: boolean = false;
   canExplore = true;
+  winning = this.boxesService.winningPosition;
+  darthVader = this.boxesService.darthVaderPosition;
+  cliff = this.boxesService.cliffPosition;
+  aliens = this.boxesService.aliensPosition;
+  radiations = this.boxesService.radiationsPositions;
+  storms = this.boxesService.stormPositions;
 
   constructor(
     private charactersService: CharactersService,
@@ -52,6 +58,12 @@ export class GameComponent implements OnInit {
     this.initializeBoard();
     this.currentPlayer = 'explorer';
     this.startArmourReductionInterval();
+    this.boxesService.generateWinningPosition();
+    this.boxesService.generateDarthVaderPosition();
+    this.boxesService.generateCliffPosition();
+    this.boxesService.generateAliensPositions();
+    this.boxesService.generateRadiationPositions();
+    this.boxesService.generateStormPositions();
   }
 
   createCharacters(): void {
@@ -129,7 +141,7 @@ export class GameComponent implements OnInit {
         this.moveCharacter(currentPlayerCharacter, row, col);
         this.board[row][col] = BoardBox.Explored;
 
-        const boxType = this.gameUtilsService.getBoxType(row, col);
+        const boxType = this.boxesService.getBoxType(row, col);
         if (boxType) {
             switch (boxType) {
                 case 'STORM-DUST':
@@ -150,7 +162,7 @@ export class GameComponent implements OnInit {
             }
         }
 
-        if (row === 3 && col === 3) {
+        if (row === this.winning.row && col === this.winning.col) {
             this.isColonyDiscovered = true;
             this.openColonyDiscoveredDialog();
         }

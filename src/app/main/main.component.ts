@@ -16,6 +16,7 @@ export class MainComponent implements OnInit {
     this.gameService.isGameStarted$.subscribe((isGameStarted: boolean) => {
       this.isGameStarted = isGameStarted;
     });
+    localStorage.removeItem('gameState');
   }
 
   startGame(): void {

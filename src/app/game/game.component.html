@@ -84,12 +84,12 @@
           'unexplored-box': box === 'unexplored',
           'current-character-box': isCurrentCharacterPosition(i, j),
           'disabled-box': !isAdjacentPosition(i, j) || box === 'explored',
-          'colony-discovered-box': isColonyDiscovered && i === 3 && j === 3,
-          'mars-cliffs-box': i === 0 && j === 2 && box === 'explored',
-          'mars-storm-box': (i === 0 && j === 0 && box === 'explored') || (i === 2 && j === 3 && box === 'explored') || (i === 4 && j === 4 && box === 'explored'),
-          'mars-radiation-box': (i === 3 && j === 1 && box === 'explored') || (i === 1 && j === 3 && box === 'explored'),
-          'mars-aliens-box': (i === 1 && j === 2 && box === 'explored') || (i === 2 && j === 1 && box === 'explored'),
-          'mars-boss-box': (i === 4 && j === 2 && box === 'explored')
+          'colony-discovered-box': isColonyDiscovered && i === winning.row && j === winning.col,
+          'mars-cliffs-box': i === cliff.row && j === cliff.col && box === 'explored',
+          'mars-storm-box': (i === storms.row1 && j === storms.col1 && box === 'explored') || (i === storms.row2 && j === storms.col2 && box === 'explored') || (i === storms.row3 && j === storms.col3 && box === 'explored'),
+          'mars-radiation-box': (i === radiations.row1 && j === radiations.col1 && box === 'explored') || (i === radiations.row2 && j === radiations.col2 && box === 'explored'),
+          'mars-aliens-box': (i === aliens.row1 && j === aliens.col1 && box === 'explored') || (i === aliens.row2 && j === aliens.col2 && box === 'explored'),
+          'mars-boss-box': (i === darthVader.row && j === darthVader.col && box === 'explored')
         }"
         (click)="onBoxClick(i, j)">
         <div class="characters-box">

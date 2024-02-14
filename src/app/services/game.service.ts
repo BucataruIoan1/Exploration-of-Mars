@@ -6,8 +6,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class GameService {
 
-  public isGameStartedSource = new BehaviorSubject<boolean>(false);
+  private isGameStartedSource = new BehaviorSubject<boolean>(false);
   isGameStarted$ = this.isGameStartedSource.asObservable();
+  private visitedGamePage: boolean = false;
 
   constructor() { }
 
@@ -17,5 +18,13 @@ export class GameService {
 
   stopGame(): void {
     this.isGameStartedSource.next(false);
+  }
+
+  setVisitedGamePage(value: boolean): void {
+    this.visitedGamePage = value;
+  }
+
+  hasVisitedGamePage(): boolean {
+    return this.visitedGamePage;
   }
 }

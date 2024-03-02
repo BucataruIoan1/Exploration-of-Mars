@@ -23,4 +23,9 @@ export class MainComponent implements OnInit {
     this.gameService.startGame();
     this.router.navigate(['/choose-explorer']);
   }
+
+  moveToAboutGame(): void {
+    this.gameService.startGame();
+    this.router.navigate(['/about-game']);
+  }
 }

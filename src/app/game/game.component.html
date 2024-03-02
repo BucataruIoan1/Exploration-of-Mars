@@ -5,7 +5,7 @@
         <div class="character-image">
           {{ character?.avatar }} - <span class="character-type"> {{ character?.type | titlecase}} </span>
         </div>
-        <span>NAME: {{ character?.name }}</span>
+        <span>NAME: {{ character?.name | titlecase}}</span>
         <span>HP: {{ isCharacterDead(character) ? 0 : character?.hp }}</span>
         <span>ARMOUR: {{ character?.armour }}</span>
 

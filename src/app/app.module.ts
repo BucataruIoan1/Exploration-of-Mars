@@ -17,6 +17,7 @@ import { DangerDialogComponent } from './dialog/danger-dialog/danger-dialog.comp
 import { GameOverDialogComponent } from './dialog/game-over-dialog/game-over-dialog.component';
 import { FormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AboutGameComponent } from './about-game/about-game.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ColonyDiscoveredDialogComponent,
     DangerDialogComponent,
     GameOverDialogComponent,
+    AboutGameComponent,
   ],
   imports: [
     BrowserModule,

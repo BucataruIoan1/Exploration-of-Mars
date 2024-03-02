@@ -1,0 +1,65 @@
+@import '../../styles.scss';
+
+.about-game-section {
+  height: 100vh;
+  background: url('../../../src/images/mars.png.jpg') center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-text {
+  margin-top: 3rem;
+  width: 50%;
+  height: 65%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  color: $yellow-orange;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1rem;
+  opacity: 0;
+  animation: a-long-time-ago 2.5s linear forwards;
+  overflow-y: auto;
+  letter-spacing: 1.2px;
+}
+
+.buttons-section {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+}
+
+.left-arrow {
+  margin: 0px 1rem 1rem 1rem;
+  font-size: 2rem;
+  color: $pink-beige;
+  cursor: pointer;
+}
+
+.left-arrow:hover {
+  color: $dark-brown;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 5px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: $light-orange; 
+  border-radius: 5px;
+}
+
+@keyframes a-long-time-ago {
+  to {
+    opacity: 1;
+  }
+}
+

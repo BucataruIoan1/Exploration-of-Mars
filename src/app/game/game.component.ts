@@ -342,7 +342,10 @@ export class GameComponent implements OnInit {
       this.isColonyDiscovered = false;
       this.isDialogClosed = false;
       this.gameService.stopGame();
-      this.router.navigate(['']);
+      this.router.navigate(['/']);
+    } else if (this.isColonyDiscovered) {
+      this.gameService.stopGame();
+      this.router.navigate(['/']);
     }
   }
 }

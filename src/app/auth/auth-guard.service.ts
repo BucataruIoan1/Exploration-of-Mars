@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     canActivate(
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean> | boolean {
-      
+
       return this.gameService.isGameStarted$.pipe(
         take(1),
         map(isGameStarted => {

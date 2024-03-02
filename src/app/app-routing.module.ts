@@ -6,12 +6,18 @@ import { DoctorComponent } from './characters/doctor/doctor.component';
 import { EngineerComponent } from './characters/engineer/engineer.component';
 import { GameComponent } from './game/game.component';
 import { AuthGuard } from './auth/auth-guard.service';
+import { AboutGameComponent } from './about-game/about-game.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
     pathMatch: 'full'
+  },
+  {
+    path: 'about-game',
+    component: AboutGameComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'choose-explorer',

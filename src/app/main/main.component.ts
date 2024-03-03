@@ -28,4 +28,9 @@ export class MainComponent implements OnInit {
     this.gameService.startGame();
     this.router.navigate(['/about-game']);
   }
+
+  moveToContact(): void {
+    this.gameService.startGame();
+    this.router.navigate(['/contact']);
+  }
 }

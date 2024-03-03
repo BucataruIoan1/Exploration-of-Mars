@@ -15,9 +15,10 @@ import { ColonyDiscoveredDialogComponent } from './dialog/colony-discovered-dial
 import { MatDialogModule } from '@angular/material/dialog';
 import { DangerDialogComponent } from './dialog/danger-dialog/danger-dialog.component';
 import { GameOverDialogComponent } from './dialog/game-over-dialog/game-over-dialog.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AboutGameComponent } from './about-game/about-game.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AboutGameComponent } from './about-game/about-game.component';
     DangerDialogComponent,
     GameOverDialogComponent,
     AboutGameComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import { AboutGameComponent } from './about-game/about-game.component';
     MatIconModule,
     MatDialogModule,
     FormsModule,
+    ReactiveFormsModule,
     MatCheckboxModule
   ],
   providers: [GameService, AuthGuard],

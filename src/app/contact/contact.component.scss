@@ -1,0 +1,84 @@
+@import '../../styles.scss';
+
+.contact-page {
+    height: 100vh;
+    background: url('../../../src/images/mars.png.jpg') center/cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-input-section {
+    height: 45%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 7.5vh;
+}
+
+.form-inputs {
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.buttons-section {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+  }
+  
+.left-arrow {
+    margin: 0px 1rem 1rem 1rem;
+    font-size: 2rem;
+    color: $pink-beige;
+    cursor: pointer;
+}
+  
+.left-arrow:hover {
+    color: $dark-brown;
+    cursor: pointer;
+}
+
+.contact-name {
+    height: 5vh;
+    width: 50%;
+    margin-top: 0.25rem;
+    border-radius: 5px;
+    border: none;
+    opacity: 0.7;
+}
+
+.contact-message {
+    height: 10vh;
+    width: 75%;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    opacity: 0.7;
+}
+
+.label-content {
+    font-size: 1.25rem;
+    font-weight: bold;
+    opacity: 0.7;
+}
+
+.send-button {
+    width: 25%;
+    height: 5vh;
+    cursor: pointer;
+    background-color: $light-orange;
+    color: $pink-beige;
+    border: none;
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+.send-button:hover {
+    background-color: $yellow-orange;
+}

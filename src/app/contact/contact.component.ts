@@ -14,6 +14,8 @@ export class ContactComponent {
   serviceId: string = "service_tp8yl9g";
   templateId: string = "template_fqbeafu";
   userId: string = "7euEA5nSPy3FrFWVV";
+  emailRegex: string = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+  isFormValid: boolean | undefined = false;
 
   constructor(
     private fb: FormBuilder,
@@ -22,14 +24,23 @@ export class ContactComponent {
   ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
       message: ['']
     });
+  }
+
+  ngOnInit(): void {
+    this.contactForm?.get('name')?.valueChanges.subscribe(() => this.validateForm());
+    this.contactForm?.get('email')?.valueChanges.subscribe(() => this.validateForm());
   }
 
   moveToMainPage(): void {
     this.gameService.stopGame();
     this.router.navigate(['/']);
+  }
+
+  validateForm(): void {
+    this.isFormValid = this.contactForm?.get('name')?.valid && this.contactForm?.get('email')?.valid;
   }
 
   submitForm() {
@@ -42,6 +53,8 @@ export class ContactComponent {
         }, (error) => {
           console.error('Error sending email:', error);
         });
+        this.gameService.stopGame();
+        this.router.navigate(['/']);
     }
   }
 }

@@ -1,4 +1,15 @@
 <div class="contact-page">
+  <div class="text-section">
+    <h1>Welcome to our application!</h1>
+    <p>Thank you for visiting our website. We're thrilled to have you here! Our application is constantly evolving to provide you with the best possible experience. Your feedback is invaluable to us in shaping the future of our app.</p>
+    <p>If you have any ideas, suggestions, or feedback on how we can improve our application, please feel free to share them with us using the form below. We greatly appreciate your input and look forward to hearing from you!</p>
+    <h3>Best regards,
+      <br>
+      <b>Bucataru Ioan</b>
+      <br>
+      <b>Junior Software Engineer</b>
+    </h3>
+  </div>
   <div class="contact-input-section">
     <form *ngIf="contactForm" [formGroup]="contactForm" (ngSubmit)="submitForm()" class="form-inputs">
       <label for="name" class="label-content">Name:</label>
@@ -10,7 +21,7 @@
       <label for="message" class="label-content">Message:</label>
       <textarea id="message" formControlName="message" class="contact-message" placeholder="Please enter your message"></textarea>
       
-      <button mat-stroked-button class="send-button" type="submit">Send</button>
+      <button class="send-button" type="submit" [ngClass]="{'button-disabled': !isFormValid}">Send</button>
     </form>
   </div>
 

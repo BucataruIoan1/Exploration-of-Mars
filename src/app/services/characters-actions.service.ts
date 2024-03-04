@@ -12,7 +12,7 @@ export class CharactersActionsService {
 
   healCharacter(character: Character | undefined): void {
     if (character) {
-      character.hp = Math.min(100, character.hp + 20);
+      character.hp = Math.min(100, character.hp + 50);
     }
   }
 

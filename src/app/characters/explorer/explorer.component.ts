@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/characters.service';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-explorer',
@@ -12,22 +13,17 @@ export class ExplorerComponent {
   explorerForm: FormGroup;
   isNameInvalid: boolean = false;
   errorMessage: string = '';
-  isLeftArrowDisabled = true;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private charactersService: CharactersService
+    private charactersService: CharactersService,
+    private gameService: GameService,
   ) {
     this.explorerForm = this.fb.group({
       explorerName: ['', [Validators.required, this.customNameValidator]]
     });
 
-    this.charactersService.getExplorerObservable().subscribe((explorer) => {
-      if (explorer) {
-        this.isLeftArrowDisabled = false;
-      }
-    });
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -76,6 +72,11 @@ export class ExplorerComponent {
 
     return { 'invalidName': true };
   };
+
+  moveToMainPage(): void {
+    this.gameService.stopGame();
+    this.router.navigate(['/']);
+  }
 
   moveToDoctorStep() {
     const explorerNameControl = this.explorerForm.get('explorerName');

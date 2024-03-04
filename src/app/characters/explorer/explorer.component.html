@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="buttons-section">
-        <div>
-            <mat-icon class="mat-icon-xl left-arrow" [ngClass]="{'disabled-arrow': isLeftArrowDisabled}">keyboard_arrow_left</mat-icon>
+        <div (click)="moveToMainPage()">
+            <mat-icon class="mat-icon-xl left-arrow">keyboard_arrow_left</mat-icon>
         </div>
         <div (click)="moveToDoctorStep()">
             <mat-icon class="mat-icon-xl right-arrow">keyboard_arrow_right</mat-icon>

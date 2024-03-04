@@ -5,12 +5,31 @@
     background: url('../../../src/images/mars.png.jpg') center/cover;
     display: flex;
     flex-direction: column;
-    align-items: center;
+}
+
+.text-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2rem;
+    height: 30%;
+    width: 80%;
+    color: $pink-beige;
+    line-height: 1.6;
+    padding: 0.5rem;
+}
+
+.text-section h1, h3 {
+    color: $yellow-orange;
+}
+
+.text-section p {
+    font-size: 1.2rem;
 }
 
 .contact-input-section {
     height: 45%;
-    width: 40%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,7 +43,7 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    width: 100%;
+    width: 50%;
 }
 
 .buttons-section {
@@ -81,4 +100,9 @@
 
 .send-button:hover {
     background-color: $yellow-orange;
+}
+
+.button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

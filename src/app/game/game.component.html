@@ -9,14 +9,12 @@
         <span>HP: {{ isCharacterDead(character) ? 0 : character?.hp }}</span>
         <span>ARMOUR: {{ character?.armour }}</span>
 
-
-
         <ng-container *ngIf="character.type === 'doctor'">
           <ng-container *ngIf="selectedOption === 'Heal' && currentPlayer === 'doctor'">
           <span *ngIf="doctor && explorer && areCharactersOnSamePosition(doctor, explorer)">
             <div class="checkbox-wrapper-13 checkbox-section-explorer">
               <input id="c1-13" type="checkbox" [(ngModel)]="explorerHealCheckbox" (change)="onExplorerCheckboxChange()">
-              <label for="c1-13">Heal Explorer</label>
+              <label for="c1-13" [ngStyle]="{'color': '#451804'}">Heal Explorer</label>
             </div>
 
           </span>
@@ -26,7 +24,7 @@
             <span *ngIf="doctor && engineer && areCharactersOnSamePosition(doctor, engineer)">
               <div class="checkbox-wrapper-13 checkbox-section-explorer">
                 <input id="c1-13" type="checkbox" [(ngModel)]="engineerHealCheckbox" (change)="onEngineerCheckboxChange()">
-                <label for="c1-13">Heal Engineer</label>
+                <label for="c1-13" [ngStyle]="{'color': '#451804'}">Heal Engineer</label>
               </div>
             </span>
           </ng-container>
@@ -101,8 +99,6 @@
               <span *ngIf="character.type === 'explorer' && character.hp > 0">👨‍🚀</span>
               <span *ngIf="character.type === 'doctor' && character.hp > 0">👨‍⚕️</span>
               <span *ngIf="character.type === 'engineer' && character.hp > 0">👷</span>
-              
-
             </div>
           </ng-container>
         </div>

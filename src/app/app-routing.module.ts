@@ -1,5 +1,6 @@
-import { inject, NgModule } from '@angular/core';
-import { CanDeactivateFn, RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MainComponent } from './main/main.component';
 import { CharactersComponent } from './characters/characters.component';
 import { DoctorComponent } from './characters/doctor/doctor.component';
@@ -53,7 +54,7 @@ const routes: Routes = [
   {
     path: 'game',
     component: GameComponent,
-    canDeactivate: [canDeactivateGame],
+    canActivate: [AuthGuard]
   },
 ];
 

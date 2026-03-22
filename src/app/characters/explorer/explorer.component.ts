@@ -14,6 +14,8 @@ export class ExplorerComponent implements AfterViewInit {
   isNameInvalid: boolean = false;
   errorMessage: string = '';
 
+  @ViewChild('nameInput') nameInput?: ElementRef<HTMLInputElement>;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -25,6 +27,14 @@ export class ExplorerComponent implements AfterViewInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const el = this.nameInput?.nativeElement;
+      if (!el) return;
+      el.focus();
+      const len = el.value?.length ?? 0;
+      el.setSelectionRange(len, len);
+    }, 0);
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -90,10 +100,5 @@ export class ExplorerComponent implements AfterViewInit {
         this.isNameInvalid = true;
       }
     }
-  }
-
-  moveToMainPage(): void {
-    this.gameService.stopGame();
-    this.router.navigate(['/']);
   }
 }

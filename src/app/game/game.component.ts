@@ -162,9 +162,14 @@ export class GameComponent implements OnInit {
             }
         }
 
+        if (!this.atLeastOneCharacterAlive()) {
+            this.gameService.stopGame();
+        }
+
         if (row === this.winning.row && col === this.winning.col) {
             this.isColonyDiscovered = true;
             this.openColonyDiscoveredDialog();
+            this.gameService.stopGame();
         }
 
         this.changePlayerTurn();
@@ -342,10 +347,12 @@ export class GameComponent implements OnInit {
       this.isColonyDiscovered = false;
       this.isDialogClosed = false;
       this.gameService.stopGame();
-      this.router.navigate(['/']);
+      this.gameService.setAllowLeaveGame(true);
+      this.router.navigate(['/'], { replaceUrl: true });
     } else if (this.isColonyDiscovered) {
       this.gameService.stopGame();
-      this.router.navigate(['/']);
+      this.gameService.setAllowLeaveGame(true);
+      this.router.navigate(['/'], { replaceUrl: true });
     }
   }
 }

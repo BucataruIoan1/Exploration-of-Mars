@@ -1,33 +1,40 @@
-import { Component, HostListener } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/characters.service';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-explorer',
   templateUrl: './explorer.component.html',
   styleUrls: ['./explorer.component.scss']
 })
-export class ExplorerComponent {
+export class ExplorerComponent implements AfterViewInit {
   explorerForm: FormGroup;
   isNameInvalid: boolean = false;
   errorMessage: string = '';
-  isLeftArrowDisabled = true;
+
+  @ViewChild('nameInput') nameInput?: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private charactersService: CharactersService
+    private charactersService: CharactersService,
+    private gameService: GameService
   ) {
     this.explorerForm = this.fb.group({
       explorerName: ['', [Validators.required, this.customNameValidator]]
     });
+  }
 
-    this.charactersService.getExplorerObservable().subscribe((explorer) => {
-      if (explorer) {
-        this.isLeftArrowDisabled = false;
-      }
-    });
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const el = this.nameInput?.nativeElement;
+      if (!el) return;
+      el.focus();
+      const len = el.value?.length ?? 0;
+      el.setSelectionRange(len, len);
+    }, 0);
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -88,5 +95,10 @@ export class ExplorerComponent {
         this.isNameInvalid = true;
       }
     }
+  }
+
+  moveToMainPage(): void {
+    this.gameService.stopGame();
+    this.router.navigate(['/']);
   }
 }

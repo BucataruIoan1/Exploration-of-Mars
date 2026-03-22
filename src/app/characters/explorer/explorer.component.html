@@ -3,15 +3,15 @@
         <div class="explorer-name-section">
             <p>Please introduce a name for the explorer</p>
             <div class="explorer-image">👨‍🚀</div>
-            <input class="explorer-name" type="text" formControlName="explorerName">
+            <input #nameInput class="explorer-name" type="text" formControlName="explorerName">
             <div *ngIf="isNameInvalid" class="invalid-name">
                 {{errorMessage}}
             </div>
         </div>
     </div>
     <div class="buttons-section">
-        <div>
-            <mat-icon class="mat-icon-xl left-arrow" [ngClass]="{'disabled-arrow': isLeftArrowDisabled}">keyboard_arrow_left</mat-icon>
+        <div (click)="moveToMainPage()">
+            <mat-icon class="mat-icon-xl left-arrow">keyboard_arrow_left</mat-icon>
         </div>
         <div (click)="moveToDoctorStep()">
             <mat-icon class="mat-icon-xl right-arrow">keyboard_arrow_right</mat-icon>

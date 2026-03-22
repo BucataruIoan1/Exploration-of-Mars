@@ -3,7 +3,7 @@
         <div class="engineer-name-section">
             <p>Please introduce a name for the engineer</p>
             <div class="engineer-image">👷</div>
-            <input class="engineer-name" type="text" formControlName="engineerName">
+            <input #nameInput class="engineer-name" type="text" formControlName="engineerName">
             <div *ngIf="isNameInvalid" class="invalid-name">
                 {{errorMessage}}
             </div>

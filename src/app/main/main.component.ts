@@ -13,6 +13,7 @@ export class MainComponent implements OnInit {
   constructor(public gameService: GameService, private router: Router) {}
 
   ngOnInit(): void {
+    this.gameService.stopGame();
     this.gameService.isGameStarted$.subscribe((isGameStarted: boolean) => {
       this.isGameStarted = isGameStarted;
     });

@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/characters.service';
@@ -8,11 +8,13 @@ import { CharactersService } from 'src/app/services/characters.service';
   templateUrl: './doctor.component.html',
   styleUrls: ['./doctor.component.scss']
 })
-export class DoctorComponent {
+export class DoctorComponent implements AfterViewInit {
   doctorForm: FormGroup;
   isNameInvalid: boolean = false;
   errorMessage: string = '';
   isLeftArrowDisabled = true;
+
+  @ViewChild('nameInput') nameInput?: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,16 @@ export class DoctorComponent {
         this.isLeftArrowDisabled = false;
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const el = this.nameInput?.nativeElement;
+      if (!el) return;
+      el.focus();
+      const len = el.value?.length ?? 0;
+      el.setSelectionRange(len, len);
+    }, 0);
   }
 
   @HostListener('document:keydown', ['$event'])

@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .doctor-input-section {
@@ -40,6 +42,8 @@
   margin-top: 0.5rem;
   border-radius: 5px;
   border: none;
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 .buttons-section {

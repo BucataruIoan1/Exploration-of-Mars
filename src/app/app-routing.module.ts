@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { inject, NgModule } from '@angular/core';
+import { CanDeactivateFn, RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { CharactersComponent } from './characters/characters.component';
 import { DoctorComponent } from './characters/doctor/doctor.component';
@@ -8,6 +8,16 @@ import { GameComponent } from './game/game.component';
 import { AuthGuard } from './auth/auth-guard.service';
 import { AboutGameComponent } from './about-game/about-game.component';
 import { ContactComponent } from './contact/contact.component';
+import { GameService } from './services/game.service';
+
+const canDeactivateGame: CanDeactivateFn<GameComponent> = () => {
+  const gameService = inject(GameService);
+  if (gameService.canLeaveGame()) {
+    gameService.setAllowLeaveGame(false);
+    return true;
+  }
+  return false;
+};
 
 const routes: Routes = [
   {
@@ -43,6 +53,7 @@ const routes: Routes = [
   {
     path: 'game',
     component: GameComponent,
+    canDeactivate: [canDeactivateGame],
   },
 ];
 

@@ -1,0 +1,86 @@
+<div class="howto-page">
+  <div class="howto-layout">
+    <div class="mars-panel">
+      <h1 class="howto-title mars-glow-text">How to Play</h1>
+
+      <section class="howto-section">
+        <h2 class="howto-heading">🎯 Objective</h2>
+        <p class="howto-text">
+          Your team of 3 heroes must explore a <strong>5×5 Mars grid</strong> to find the hidden colony.
+          Move one hero per turn. <strong>Win</strong> by stepping on the colony cell.
+          <strong>Lose</strong> if all 3 heroes reach 0 HP.
+        </p>
+      </section>
+
+      <section class="howto-section">
+        <h2 class="howto-heading">🔄 Turn Order</h2>
+        <p class="howto-text">
+          Explorer → Doctor → Engineer (repeat). Dead heroes are skipped. Each turn you pick <strong>one action</strong>.
+        </p>
+      </section>
+
+      <section class="howto-section">
+        <h2 class="howto-heading">👥 Your Heroes</h2>
+        <div class="hero-cards">
+          <div class="hero-card">
+            <span class="hero-emoji">👨‍🚀</span>
+            <div class="hero-info">
+              <h3 class="hero-role">Explorer</h3>
+              <p class="hero-desc">Scout-only. Can only Explore. No healing or staying.</p>
+              <p class="hero-stats">HP 100 | Armour 100</p>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <span class="hero-emoji">🧑‍⚕️</span>
+            <div class="hero-info">
+              <h3 class="hero-role">Doctor</h3>
+              <p class="hero-desc">Can Explore, Stay, or Heal a teammate on the same cell (+50 HP).</p>
+              <p class="hero-stats">HP 100 | Armour 25</p>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <span class="hero-emoji">👨‍🔧</span>
+            <div class="hero-info">
+              <h3 class="hero-role">Engineer</h3>
+              <p class="hero-desc">Can Explore, Stay, or Repair a teammate on the same cell (+50 Armour).</p>
+              <p class="hero-stats">HP 25 | Armour 100</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="howto-section">
+        <h2 class="howto-heading">⚠️ Dangers</h2>
+        <p class="howto-muted">Each unexplored cell may hide a trap. Damage triggers once (first visit).</p>
+        <div class="danger-grid">
+          <div class="danger-card" *ngFor="let d of dangers">
+            <span class="danger-emoji">{{ d.emoji }}</span>
+            <div class="danger-info">
+              <div class="danger-top">
+                <span class="danger-label">{{ d.key }}</span>
+                <span class="danger-dmg">
+                  <span *ngIf="d.hp !== 0">{{ d.hp }} HP</span><span *ngIf="d.hp !== 0 && d.armour !== 0">, </span><span *ngIf="d.armour !== 0">{{ d.armour }} Armour</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="howto-section">
+        <h2 class="howto-heading">🛡️ Armour Decay</h2>
+        <p class="howto-text">
+          If a hero has <strong>0 Armour</strong>, they lose <strong>10 HP every 5 seconds</strong> (won't drop below 10 HP from this alone).
+        </p>
+      </section>
+
+      <div class="howto-cta">
+        <button type="button" class="cta-button" (click)="readyToPlay()">
+          I'm Ready — Choose Names →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

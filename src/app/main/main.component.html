@@ -1,14 +1,24 @@
-<div *ngIf="!isGameStarted">
-  <div class="intro-section">
-    <div class="title-section">
-      <h1>Exploration of Mars</h1>
-    </div>
-    <div class="options-menu">
-      <ul class="options-list">
-        <li class="option-game" (click)="startGame()">Start Game</li>
-        <li class="option-game" (click)="moveToAboutGame()">About the Game</li>
-        <li class="option-game" (click)="moveToContact()">Contact</li>
-      </ul>
+<div *ngIf="!isGameStarted" class="main-page">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="mars-panel">
+        <div class="mars-panel-image" role="img" aria-label="Mars Colony"></div>
+      </div>
+
+      <h1 class="hero-title mars-glow-text">
+        Mars Colony
+        <br />
+        <span class="hero-subtitle">Discovery</span>
+      </h1>
+
+      <p class="hero-description">
+        Lead a team of 3 heroes across the Martian surface. Explore the unknown.
+        Find the colony. Survive the dangers.
+      </p>
+
+      <button type="button" class="start-button" (click)="startGame()">
+        🚀 Start Game
+      </button>
     </div>
   </div>
 </div>

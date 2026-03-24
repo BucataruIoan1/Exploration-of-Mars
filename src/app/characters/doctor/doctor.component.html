@@ -1,20 +1,24 @@
-<div class="doctor-section" [formGroup]="doctorForm">
-    <div class="doctor-input-section">
-        <div class="doctor-name-section">
-            <p>Please introduce a name for the doctor</p>
-            <div class="doctor-image">👨‍⚕️</div>
-            <input #nameInput class="doctor-name" type="text" formControlName="doctorName">
-            <div *ngIf="isNameInvalid" class="invalid-name">
-                {{errorMessage}}
-            </div>
-        </div>
+<div class="choose-page" [formGroup]="doctorForm">
+  <div class="choose-panel">
+    <h1 class="choose-title">Please introduce a name for the doctor</h1>
+    <div class="choose-emoji">🧑‍⚕️</div>
+
+    <input
+      #nameInput
+      class="choose-input"
+      type="text"
+      formControlName="doctorName"
+      placeholder="Enter Doctor name..."
+    />
+
+    <button type="button" class="choose-button" [disabled]="!canProceed" (click)="moveToEngineerStep()">
+      Next →
+    </button>
+
+    <div class="progress-dots" aria-label="Progress">
+      <span class="dot dot-active"></span>
+      <span class="dot dot-active"></span>
+      <span class="dot"></span>
     </div>
-    <div class="buttons-section">
-        <div (click)="moveToExplorer()">
-            <mat-icon class="mat-icon-xl left-arrow">keyboard_arrow_left</mat-icon>
-        </div>
-        <div (click)="moveToEngineerStep()">
-            <mat-icon class="mat-icon-xl right-arrow">keyboard_arrow_right</mat-icon>
-        </div>
-    </div>
+  </div>
 </div>

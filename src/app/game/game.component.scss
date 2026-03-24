@@ -1,225 +1,406 @@
 @import "../../styles.scss";
 
-.game-section {
+.game-page {
   height: 100vh;
-  background: url("../../images/mars.png.jpg") center/cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: url("../../images/main-page-background.jpg") center/cover;
+  position: relative;
+  padding: 18px;
+  box-sizing: border-box;
   user-select: none;
   -webkit-user-select: none;
+  overflow: hidden;
 }
 
-.colony-discovered-box {
-  background: url("../../images/mars-colony.png.png") center/cover;
+.game-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.32) 55%, rgba(0, 0, 0, 0.18));
+  pointer-events: none;
 }
 
-.mars-cliffs-box {
-  background: url("../../images/mars-cliffs.png.jpg") center/cover;
+.game-layout {
+  position: relative;
+  z-index: 1;
+  height: calc(100vh - 36px);
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 26px;
 }
 
-.mars-storm-box {
-  background: url("../../images/storm-dust.png.jpg") center/cover;
-}
-
-.mars-radiation-box {
-  background: url("../../images/radiation.png.jpg") center/cover;
-}
-
-.mars-aliens-box {
-  background: url("../../images/aliens.png.jpg") center/cover;
-}
-
-.mars-boss-box {
-  background: url("../../images/darth-vader.png.png") center top/cover;
-}
-
-.disabled-character {
-  opacity: 0.5;
-}
-
-.characters-section {
+.hud-panel {
+  height: 100%;
+  padding: 12px;
   display: flex;
-  height: 90%;
-  width: 30%;
-  margin: 1rem;
-  color: $pink-beige;
   flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.32);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
 }
 
-.character-image {
-  margin: 1rem 0px 1rem 0px;
-  font-size: 2rem;
+.hero-card {
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: rgba(0, 0, 0, 0.34);
+  padding: 12px 12px 10px;
+}
+
+.hero-card.hero-current {
+  border-color: rgba(231, 125, 17, 0.95);
+  box-shadow: 0 0 0 1px rgba(231, 125, 17, 0.3);
+}
+
+.hero-card.hero-dead {
+  opacity: 0.55;
+  filter: grayscale(0.35);
+}
+
+.hero-top {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.hero-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-avatar {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.hero-role {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(231, 125, 17, 0.95);
+}
+
+.hero-down {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.04em;
+}
+
+.turn-pill {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(231, 125, 17, 0.9);
+  background: rgba(231, 125, 17, 0.12);
+  color: rgba(231, 125, 17, 0.95);
+}
+
+.hero-name-row {
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 54px 1fr 68px;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  color: rgba(240, 231, 231, 0.85);
+}
+
+.stat-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.stat-hp {
+  background: linear-gradient(90deg, #1ecb67, #b6ffd2);
+}
+
+.stat-armour {
+  background: linear-gradient(90deg, #3b82f6, #cfe6ff);
+}
+
+.stat-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: rgba(240, 231, 231, 0.75);
+}
+
+.hero-targets {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.target-title {
+  font-size: 12px;
+  color: rgba(240, 231, 231, 0.75);
+  margin-bottom: 8px;
+}
+
+.target-list {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
-.explorer-section,
-.doctor-section,
-.engineer-section {
-  margin: 1rem;
+.actions-panel {
+  margin-top: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.28);
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.doctor-section {
-  color: $dark-brown;
-}
-
-.character-type {
-  font-size: 1rem;
-}
-
-.board-section {
-  height: 90%;
+.action-buttons {
   display: flex;
-  flex-direction: column;
-  width: 70%;
-  margin: 1rem;
-  border: 1px solid black;
-  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.board-row {
+.action-btn {
+  flex: 1 1 calc(50% - 10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.24);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+
+.action-btn:hover {
+  border-color: rgba(231, 125, 17, 0.55);
+}
+
+.action-btn.is-selected {
+  border-color: rgba(231, 125, 17, 0.95);
+  background: rgba(231, 125, 17, 0.9);
+  color: rgba(0, 0, 0, 0.92);
+}
+
+.action-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.action-icon {
+  width: 18px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.inline-error {
+  font-size: 11px;
+  color: rgba(231, 125, 17, 0.95);
+  padding-left: 2px;
+}
+
+.restart-btn {
+  border-radius: 10px;
+  border: 1px solid rgba(231, 125, 17, 0.95);
+  background: rgba(231, 125, 17, 0.95);
+  color: rgba(0, 0, 0, 0.92);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  width: 100%;
+  transition: filter 120ms ease;
+}
+
+.restart-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
+}
+
+.restart-btn:hover {
+  filter: brightness(1.03);
+}
+
+.board-panel {
+  height: 100%;
+  padding: 8px;
   display: flex;
-  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-.characters-box {
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 92px);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.grid-cell {
+  width: 92px;
+  height: 92px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.32);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.grid-cell-unexplored {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.grid-cell-explored {
+  background: rgba(0, 0, 0, 0.26);
+}
+
+.grid-cell-active {
+  border-width: 2px;
+  border-color: rgba(231, 125, 17, 0.95);
+  box-shadow: 0 0 0 2px rgba(231, 125, 17, 0.18);
+}
+
+.cell-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cell-unknown {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.cell-emoji {
+  font-size: 22px;
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.4));
+  position: relative;
+  z-index: 1;
+}
+
+.cell-emoji-under {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 16px;
+  opacity: 0.95;
+  z-index: 1;
+}
+
+.cell-heroes {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  font-size: 2rem;
+  gap: 4px;
+  z-index: 2;
+  font-size: 18px;
 }
 
-.explorer-box,
-.doctor-box,
-.engineer-box {
-  width: 30px;
-  text-align: center;
+.event-message {
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(240, 231, 231, 0.92);
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
-.explored-box {
-  background-color: transparent;
+.event-message-win {
+  border-color: rgba(34, 197, 94, 0.55);
+  background: rgba(34, 197, 94, 0.14);
+  color: rgba(220, 252, 231, 0.95);
 }
 
-.unexplored-box {
-  background-color: $intense-orange;
+.event-message-danger {
+  border-color: rgba(253, 166, 0, 0.55);
+  background: rgba(253, 166, 0, 0.12);
+  color: rgba(255, 247, 224, 0.95);
 }
 
-.current-character-box {
-  background-color: transparent;
+.colony-discovered-box {
+  background: url("../../images/main-page.jpg") center/cover no-repeat;
 }
 
-.disabled-box.explored-box {
-  background-color: transparent;
+.mars-cliffs-box {
+  background-image: none;
 }
 
-.disabled-box.unexplored-box {
-  background-color: $intense-orange;
-  cursor: not-allowed;
-  opacity: 0.5;
+.mars-storm-box {
+  background-image: none;
 }
 
-.player-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.mars-radiation-box {
+  background-image: none;
 }
 
-.current-player-arrow {
-  transform: translateY(-50%);
-  color: $pink-beige;
-  animation: bounce 0.6s ease-in-out infinite;
+.mars-aliens-box {
+  background-image: none;
 }
 
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(-50%);
+.mars-boss-box {
+  background-image: none;
+}
+
+@media (max-width: 980px) {
+  .game-page {
+    padding: 16px;
   }
-  50% {
-    transform: translateY(-60%);
+
+  .game-layout {
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
   }
-}
 
-.board-box {
-  flex: 1;
-  border: 1px solid #000;
-  margin: 2px;
-  box-sizing: border-box;
-  position: relative;
-  cursor: pointer;
-}
+  .hud-panel {
+    max-height: unset;
+  }
 
-.options-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 1.5rem;
-}
+  .board-panel {
+    height: auto;
+  }
 
-.buttons-section {
-  display: flex;
-  gap: 10px;
-}
+  .board-grid {
+    grid-template-columns: repeat(5, 72px);
+    gap: 10px;
+  }
 
-.option {
-  width: 25%;
-  height: 5vh;
-  cursor: pointer;
-  background-color: $light-orange;
-  color: $pink-beige;
-  border: none;
-  font-size: 1.25rem;
-}
-
-.option:hover {
-  background-color: $yellow-orange;
-}
-
-.error-message {
-  color: #fff;
-  background-color: red;
-  padding: 8px;
-  border-radius: 4px;
-  margin-top: 8px;
-}
-
-.selected-option,
-.disabled-option {
-  display: block;
-  width: 25%;
-  height: 5vh;
-  cursor: pointer;
-  background-color: $light-orange;
-  color: $pink-beige;
-  border: none;
-  font-size: 1.25rem;
-}
-
-.selected-option {
-  opacity: 1;
-  cursor: pointer;
-}
-
-.disabled-option {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.restart-game {
-  position: absolute;
-  bottom: 1rem;
-}
-
-.checkbox-section-explorer {
-  margin-top: 1.5rem;
+  .grid-cell {
+    width: 72px;
+    height: 72px;
+  }
 }
 
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
@@ -293,7 +474,7 @@
     vertical-align: middle;
     cursor: pointer;
     margin-left: 4px;
-    color: #f0e7e7;
+    color: rgba(240, 231, 231, 0.92);
   }
 
   .checkbox-wrapper-13 input[type=checkbox]:not(.switch) {

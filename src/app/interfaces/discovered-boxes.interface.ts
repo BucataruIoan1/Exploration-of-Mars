@@ -3,4 +3,5 @@ export interface DiscoveredBoxes {
     radiation: { row: number; col: number }[];
     aliens: { row: number; col: number }[];
     cliffs: { row: number; col: number }[];
+    boss: { row: number; col: number }[];
 }

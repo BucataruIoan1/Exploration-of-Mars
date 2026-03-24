@@ -1,20 +1,29 @@
-<div class="engineer-section" [formGroup]="engineerForm">
-    <div class="engineer-input-section">
-        <div class="engineer-name-section">
-            <p>Please introduce a name for the engineer</p>
-            <div class="engineer-image">👷</div>
-            <input #nameInput class="engineer-name" type="text" formControlName="engineerName">
-            <div *ngIf="isNameInvalid" class="invalid-name">
-                {{errorMessage}}
-            </div>
-        </div>
+<div class="choose-page" [formGroup]="engineerForm">
+  <div class="choose-panel">
+    <h1 class="choose-title">Please introduce a name for the engineer</h1>
+    <div class="choose-emoji">👷</div>
+
+    <input
+      #nameInput
+      class="choose-input"
+      type="text"
+      formControlName="engineerName"
+      placeholder="Enter Engineer name..."
+    />
+
+    <button
+      type="button"
+      class="choose-button choose-button-primary"
+      [disabled]="!canProceed"
+      (click)="moveToGame()"
+    >
+      Start Mission! 🚀
+    </button>
+
+    <div class="progress-dots" aria-label="Progress">
+      <span class="dot dot-active"></span>
+      <span class="dot dot-active"></span>
+      <span class="dot dot-active"></span>
     </div>
-    <div class="buttons-section">
-        <div (click)="moveToDoctor()">
-            <mat-icon class="mat-icon-xl left-arrow">keyboard_arrow_left</mat-icon>
-        </div>
-        <div (click)="moveToGame()">
-            <mat-icon class="mat-icon-xl right-arrow">keyboard_arrow_right</mat-icon>
-        </div>
-    </div>
+  </div>
 </div>

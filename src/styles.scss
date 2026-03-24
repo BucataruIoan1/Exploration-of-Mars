@@ -1,12 +1,26 @@
-
 $pink-beige: #f0e7e7;
 $dark-brown: #451804;
 $intense-orange: #c1440e;
 $light-orange: #e77d11;
 $yellow-orange: #fda600;
 
-html, body { height: 100%; }
-body { margin: 0; }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Exo 2', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Orbitron', sans-serif;
+}

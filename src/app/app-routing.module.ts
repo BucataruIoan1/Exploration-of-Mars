@@ -5,9 +5,8 @@ import { CharactersComponent } from './characters/characters.component';
 import { DoctorComponent } from './characters/doctor/doctor.component';
 import { EngineerComponent } from './characters/engineer/engineer.component';
 import { GameComponent } from './game/game.component';
+import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { AuthGuard } from './auth/auth-guard.service';
-import { AboutGameComponent } from './about-game/about-game.component';
-import { ContactComponent } from './contact/contact.component';
 import { GameService } from './services/game.service';
 
 const canDeactivateGame: CanDeactivateFn<GameComponent> = () => {
@@ -26,14 +25,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'about-game',
-    component: AboutGameComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'contact',
-    component: ContactComponent,
-    canActivate: [AuthGuard]
+    path: 'how-to-play',
+    component: HowToPlayComponent,
   },
   {
     path: 'choose-explorer',

@@ -17,19 +17,17 @@ import { DangerDialogComponent } from './dialog/danger-dialog/danger-dialog.comp
 import { GameOverDialogComponent } from './dialog/game-over-dialog/game-over-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { AboutGameComponent } from './about-game/about-game.component';
-import { ContactComponent } from './contact/contact.component';
+import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
+    HowToPlayComponent,
     GameComponent,
     ColonyDiscoveredDialogComponent,
     DangerDialogComponent,
     GameOverDialogComponent,
-    AboutGameComponent,
-    ContactComponent,
   ],
   imports: [
     BrowserModule,

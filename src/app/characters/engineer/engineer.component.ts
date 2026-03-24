@@ -10,8 +10,6 @@ import { CharactersService } from 'src/app/services/characters.service';
 })
 export class EngineerComponent implements AfterViewInit {
   engineerForm: FormGroup;
-  isNameInvalid: boolean = false;
-  errorMessage: string = '';
   isLeftArrowDisabled = true;
 
   @ViewChild('nameInput') nameInput?: ElementRef<HTMLInputElement>;
@@ -50,56 +48,33 @@ export class EngineerComponent implements AfterViewInit {
   }
 
   onEnterKeyPress() {
-    const engineerNameControl = this.engineerForm.get('engineerName');
-    if (engineerNameControl) {
-      if (engineerNameControl.valid) {
-        const inputVal = engineerNameControl.value;
-        this.charactersService.setNameAndCharacter('engineer', inputVal, '👨‍🔧');
-        this.router.navigate(['game'], { replaceUrl: true });
-      } else {
-        this.isNameInvalid = true;
-      }
-    }
+    if (!this.canProceed) return;
+    const inputVal = `${this.engineerForm.get('engineerName')?.value ?? ''}`.trim();
+    this.charactersService.setNameAndCharacter('engineer', inputVal, '👷');
+    this.router.navigate(['game'], { replaceUrl: true });
   }
 
   customNameValidator = (control: AbstractControl): { [key: string]: boolean } | null => {
-    const value = control.value;
-    const hasMinLength = value.length >= 3;
-    const hasDigit = /\d/.test(value);
-    const containsOnlyDigits = /^\d+$/.test(value);
-    const containsAtLeastThreeLetters = /[a-zA-Z].*[a-zA-Z].*[a-zA-Z]/.test(value);
+    const value = `${control.value ?? ''}`;
+    const trimmed = value.trim();
 
-    this.errorMessage =
-      !hasMinLength && !hasDigit
-        ? 'Please enter a name that has at least 3 characters and 1 digit.'
-        : !hasMinLength
-        ? 'Please enter a name that has at least 3 characters.'
-        : !containsAtLeastThreeLetters
-        ? 'Please enter a name that contains at least 3 letters.'
-        : !hasDigit
-        ? 'Please enter a name that has at least 1 digit.'
-        : '';
-
-    if (hasMinLength && hasDigit && containsAtLeastThreeLetters && !containsOnlyDigits) {
-      this.isNameInvalid = false;
-      this.errorMessage = '';
-      return null;
+    if (trimmed.length === 0) {
+      return { invalidName: true };
     }
 
-    return { 'invalidName': true };
+    return null;
   };
 
+  get canProceed(): boolean {
+    const value = `${this.engineerForm.get('engineerName')?.value ?? ''}`;
+    return value.trim().length > 0;
+  }
+
   moveToGame() {
-    const engineerNameControl = this.engineerForm.get('engineerName');
-    if (engineerNameControl) {
-      if (engineerNameControl.valid) {
-        const inputVal = engineerNameControl.value;
-        this.charactersService.setNameAndCharacter('engineer', inputVal, '👨‍🔧');
-        this.router.navigate(['game'], { replaceUrl: true });
-      } else {
-        this.isNameInvalid = true;
-      }
-    }
+    if (!this.canProceed) return;
+    const inputVal = `${this.engineerForm.get('engineerName')?.value ?? ''}`.trim();
+    this.charactersService.setNameAndCharacter('engineer', inputVal, '👷');
+    this.router.navigate(['game'], { replaceUrl: true });
   }
 
   moveToDoctor() {

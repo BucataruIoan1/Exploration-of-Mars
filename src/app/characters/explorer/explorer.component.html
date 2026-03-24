@@ -1,20 +1,24 @@
-<div class="explorer-section" [formGroup]="explorerForm">
-    <div class="explorer-input-section">
-        <div class="explorer-name-section">
-            <p>Please introduce a name for the explorer</p>
-            <div class="explorer-image">👨‍🚀</div>
-            <input #nameInput class="explorer-name" type="text" formControlName="explorerName">
-            <div *ngIf="isNameInvalid" class="invalid-name">
-                {{errorMessage}}
-            </div>
-        </div>
+<div class="choose-page" [formGroup]="explorerForm">
+  <div class="choose-panel">
+    <h1 class="choose-title">Please introduce a name for the explorer</h1>
+    <div class="choose-emoji">👨‍🚀</div>
+
+    <input
+      #nameInput
+      class="choose-input"
+      type="text"
+      formControlName="explorerName"
+      placeholder="Enter Explorer name..."
+    />
+
+    <button type="button" class="choose-button" [disabled]="!canProceed" (click)="moveToDoctorStep()">
+      Next →
+    </button>
+
+    <div class="progress-dots" aria-label="Progress">
+      <span class="dot dot-active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
-    <div class="buttons-section">
-        <div (click)="moveToMainPage()">
-            <mat-icon class="mat-icon-xl left-arrow">keyboard_arrow_left</mat-icon>
-        </div>
-        <div (click)="moveToDoctorStep()">
-            <mat-icon class="mat-icon-xl right-arrow">keyboard_arrow_right</mat-icon>
-        </div>
-    </div>
+  </div>
 </div>

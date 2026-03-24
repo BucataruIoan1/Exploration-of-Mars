@@ -17,6 +17,8 @@ import { DiscoveredBoxes } from '../interfaces/discovered-boxes.interface';
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
+  readonly BoardBox = BoardBox;
+
   explorer!: Character | undefined;
   doctor!: Character | undefined;
   engineer!: Character | undefined;
@@ -29,7 +31,8 @@ export class GameComponent implements OnInit {
   selectedOption: string | undefined;
   isColonyDiscovered: boolean = false;
   isDialogClosed: boolean = false;
-  discoveredBoxes: DiscoveredBoxes = {stormDust: [], radiation: [], aliens: [], cliffs: []};
+  discoveredBoxes: DiscoveredBoxes = {stormDust: [], radiation: [], aliens: [], cliffs: [], boss: []};
+  eventMessage: { text: string; variant: 'danger' | 'win' } | null = null;
   explorerHealCheckbox: boolean = false;
   engineerHealCheckbox: boolean = false;
   explorerRepairCheckbox: boolean = false;
@@ -64,6 +67,70 @@ export class GameComponent implements OnInit {
     this.boxesService.generateAliensPositions();
     this.boxesService.generateRadiationPositions();
     this.boxesService.generateStormPositions();
+  }
+
+  getHeroesAt(row: number, col: number): Character[] {
+    return (this.characters ?? []).filter((c: Character | undefined) => {
+      if (!c) return false;
+      if (this.isCharacterDead(c)) return false;
+      return c.position?.row === row && c.position?.col === col;
+    });
+  }
+
+  getHpValue(character: Character | undefined): number {
+    if (!character) return 0;
+    return this.isCharacterDead(character) ? 0 : character.hp;
+  }
+
+  getArmourValue(character: Character | undefined): number {
+    if (!character) return 0;
+    return character.armour;
+  }
+
+  clampPercent(value: number): number {
+    return Math.max(0, Math.min(100, value));
+  }
+
+  isExploreMode(): boolean {
+    return (
+      !this.isColonyDiscovered &&
+      this.isOptionSelected &&
+      this.selectedOption === 'Explore' &&
+      this.canExplore
+    );
+  }
+
+  isCellActive(row: number, col: number): boolean {
+    return this.isExploreMode() && this.isAdjacentPosition(row, col);
+  }
+
+  getCellEmoji(row: number, col: number): string | null {
+    if (this.board[row]?.[col] !== BoardBox.Explored) return null;
+
+    if (row === this.winning.row && col === this.winning.col) return '🏕️';
+    if (row === this.cliff.row && col === this.cliff.col) return '⛰️';
+    if (
+      (row === this.storms.row1 && col === this.storms.col1) ||
+      (row === this.storms.row2 && col === this.storms.col2) ||
+      (row === this.storms.row3 && col === this.storms.col3)
+    ) {
+      return '🌪️';
+    }
+    if (
+      (row === this.radiations.row1 && col === this.radiations.col1) ||
+      (row === this.radiations.row2 && col === this.radiations.col2)
+    ) {
+      return '☢️';
+    }
+    if (
+      (row === this.aliens.row1 && col === this.aliens.col1) ||
+      (row === this.aliens.row2 && col === this.aliens.col2)
+    ) {
+      return '👽';
+    }
+    if (row === this.darthVader.row && col === this.darthVader.col) return '⚔️';
+
+    return null;
   }
 
   createCharacters(): void {
@@ -123,6 +190,24 @@ export class GameComponent implements OnInit {
     }
   }
 
+  private setEventMessage(text: string, variant: 'danger' | 'win'): void {
+    this.eventMessage = { text, variant };
+  }
+
+  private formatTrapMessage(
+    character: Character,
+    emoji: string,
+    title: string,
+    hpReduction: number,
+    armourReduction: number
+  ): string {
+    const parts: string[] = [];
+    if (hpReduction > 0) parts.push(`-${hpReduction} HP`);
+    if (armourReduction > 0) parts.push(`-${armourReduction} Armură`);
+    const dmg = parts.length > 0 ? ` (${parts.join(', ')})` : '';
+    return `${character.name} a nimerit în capcana ${emoji} ${title}${dmg}.`;
+  }
+
   onBoxClick(row: number, col: number): void {
     if (this.isColonyDiscovered || !this.currentPlayer || !this.isOptionSelected) {
         this.showErrorMessage = true;
@@ -145,29 +230,46 @@ export class GameComponent implements OnInit {
         if (boxType) {
             switch (boxType) {
                 case 'STORM-DUST':
-                    this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.stormDust, 25, 50, row, col, this.characters);
+                    if (!this.boxesService.isBoxAlreadyDiscovered(row, col, this.discoveredBoxes.stormDust)) {
+                      this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.stormDust, 25, 50, row, col, this.characters);
+                      this.setEventMessage(this.formatTrapMessage(currentPlayerCharacter, '🌪️', 'Furtună de nisip', 25, 50), 'danger');
+                    }
                     break;
                 case 'RADIATION':
-                    this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.radiation, 0, 70, row, col, this.characters);
+                    if (!this.boxesService.isBoxAlreadyDiscovered(row, col, this.discoveredBoxes.radiation)) {
+                      this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.radiation, 0, 70, row, col, this.characters);
+                      this.setEventMessage(this.formatTrapMessage(currentPlayerCharacter, '☢️', 'Radiații', 0, 70), 'danger');
+                    }
                     break;
                 case 'ALIENS':
-                    this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.aliens, 30, 30, row, col, this.characters);
+                    if (!this.boxesService.isBoxAlreadyDiscovered(row, col, this.discoveredBoxes.aliens)) {
+                      this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.aliens, 30, 30, row, col, this.characters);
+                      this.setEventMessage(this.formatTrapMessage(currentPlayerCharacter, '👽', 'Extraterestri', 30, 30), 'danger');
+                    }
                     break;
                 case 'CLIFFS':
-                    this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.cliffs, 90, 0, row, col, this.characters);
+                    if (!this.boxesService.isBoxAlreadyDiscovered(row, col, this.discoveredBoxes.cliffs)) {
+                      this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.cliffs, 90, 0, row, col, this.characters);
+                      this.setEventMessage(this.formatTrapMessage(currentPlayerCharacter, '⛰️', 'Prăpastie', 90, 0), 'danger');
+                    }
                     break;
                 case 'BOSS':
-                    this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.cliffs, 100, 100, row, col, this.characters);
+                    if (!this.boxesService.isBoxAlreadyDiscovered(row, col, this.discoveredBoxes.boss)) {
+                      this.boxesService.handleDiscoveredBox(currentPlayerCharacter, this.discoveredBoxes.boss, 100, 100, row, col, this.characters);
+                      this.setEventMessage(this.formatTrapMessage(currentPlayerCharacter, '⚔️', 'Darth Vader', 100, 100), 'danger');
+                    }
                     break;
             }
         }
 
         if (!this.atLeastOneCharacterAlive()) {
             this.gameService.stopGame();
+            this.setEventMessage('Toți membrii echipei au murit. Game Over.', 'danger');
         }
 
         if (row === this.winning.row && col === this.winning.col) {
             this.isColonyDiscovered = true;
+            this.setEventMessage(`${currentPlayerCharacter.name} a găsit colonia! YOU WIN!`, 'win');
             this.openColonyDiscoveredDialog();
             this.gameService.stopGame();
         }
@@ -340,19 +442,10 @@ export class GameComponent implements OnInit {
   }
 
   restartGame(): void {
-    if (
-      (this.isColonyDiscovered && this.isDialogClosed) ||
-      !this.atLeastOneCharacterAlive()
-    ) {
-      this.isColonyDiscovered = false;
-      this.isDialogClosed = false;
-      this.gameService.stopGame();
-      this.gameService.setAllowLeaveGame(true);
-      this.router.navigate(['/'], { replaceUrl: true });
-    } else if (this.isColonyDiscovered) {
-      this.gameService.stopGame();
-      this.gameService.setAllowLeaveGame(true);
-      this.router.navigate(['/'], { replaceUrl: true });
-    }
+    this.isColonyDiscovered = false;
+    this.isDialogClosed = false;
+    this.gameService.stopGame();
+    this.gameService.setAllowLeaveGame(true);
+    this.router.navigate(['/'], { replaceUrl: true });
   }
 }

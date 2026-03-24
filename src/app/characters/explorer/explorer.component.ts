@@ -11,8 +11,6 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class ExplorerComponent implements AfterViewInit {
   explorerForm: FormGroup;
-  isNameInvalid: boolean = false;
-  errorMessage: string = '';
 
   @ViewChild('nameInput') nameInput?: ElementRef<HTMLInputElement>;
 
@@ -45,44 +43,27 @@ export class ExplorerComponent implements AfterViewInit {
   }
 
   onEnterKeyPress() {
-    const explorerNameControl = this.explorerForm.get('explorerName');
-    if (explorerNameControl) {
-      if (explorerNameControl.valid) {
-        const inputVal = explorerNameControl.value;
-        this.charactersService.setNameAndCharacter('explorer', inputVal, '👨‍🚀');
-        this.router.navigate(['choose-doctor']);
-      } else {
-        this.isNameInvalid = true;
-      }
-    }
+    if (!this.canProceed) return;
+    const inputVal = `${this.explorerForm.get('explorerName')?.value ?? ''}`.trim();
+    this.charactersService.setNameAndCharacter('explorer', inputVal, '👨‍🚀');
+    this.router.navigate(['choose-doctor']);
   }
 
   customNameValidator = (control: AbstractControl): { [key: string]: boolean } | null => {
-    const value = control.value;
-    const hasMinLength = value.length >= 3;
-    const hasDigit = /\d/.test(value);
-    const containsOnlyDigits = /^\d+$/.test(value);
-    const containsAtLeastThreeLetters = /[a-zA-Z].*[a-zA-Z].*[a-zA-Z]/.test(value);
+    const value = `${control.value ?? ''}`;
+    const trimmed = value.trim();
 
-    this.errorMessage =
-      !hasMinLength && !hasDigit
-        ? 'Please enter a name that has at least 3 characters and 1 digit.'
-        : !hasMinLength
-        ? 'Please enter a name that has at least 3 characters.'
-        : !containsAtLeastThreeLetters
-        ? 'Please enter a name that contains at least 3 letters.'
-        : !hasDigit
-        ? 'Please enter a name that has at least 1 digit.'
-        : '';
-
-    if (hasMinLength && hasDigit && containsAtLeastThreeLetters && !containsOnlyDigits) {
-      this.isNameInvalid = false;
-      this.errorMessage = '';
-      return null;
+    if (trimmed.length === 0) {
+      return { invalidName: true };
     }
 
-    return { 'invalidName': true };
+    return null;
   };
+
+  get canProceed(): boolean {
+    const value = `${this.explorerForm.get('explorerName')?.value ?? ''}`;
+    return value.trim().length > 0;
+  }
 
   moveToMainPage(): void {
     this.gameService.stopGame();
@@ -90,15 +71,9 @@ export class ExplorerComponent implements AfterViewInit {
   }
 
   moveToDoctorStep() {
-    const explorerNameControl = this.explorerForm.get('explorerName');
-    if (explorerNameControl) {
-      if (explorerNameControl.valid) {
-        const inputVal = explorerNameControl.value;
-        this.charactersService.setNameAndCharacter('explorer', inputVal, '👨‍🚀');
-        this.router.navigate(['choose-doctor']);
-      } else {
-        this.isNameInvalid = true;
-      }
-    }
+    if (!this.canProceed) return;
+    const inputVal = `${this.explorerForm.get('explorerName')?.value ?? ''}`.trim();
+    this.charactersService.setNameAndCharacter('explorer', inputVal, '👨‍🚀');
+    this.router.navigate(['choose-doctor']);
   }
 }

@@ -223,6 +223,7 @@ export class GameComponent implements OnInit {
     const isUnexploredOrExplored = this.board[row][col] === BoardBox.Unexplored || this.board[row][col] === BoardBox.Explored;
 
     if (currentPlayerCharacter && isAdjacentPosition && isUnexploredOrExplored && this.canExplore) {
+        this.eventMessage = null;
         this.moveCharacter(currentPlayerCharacter, row, col);
         this.board[row][col] = BoardBox.Explored;
 

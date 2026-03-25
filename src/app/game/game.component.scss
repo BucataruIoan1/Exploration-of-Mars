@@ -1,7 +1,7 @@
 @import "../../styles.scss";
 
 .game-page {
-  height: 100vh;
+  min-height: 100vh;
   background: url("../../images/main-page-background.jpg") center/cover;
   position: relative;
   padding: 18px;
@@ -22,7 +22,7 @@
 .game-layout {
   position: relative;
   z-index: 1;
-  height: calc(100vh - 36px);
+  height: 100%;
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
@@ -37,7 +37,7 @@
   flex-direction: column;
   gap: 12px;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 12px 12px 0px 12px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(0, 0, 0, 0.32);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
@@ -259,6 +259,14 @@
   margin-top: 12px;
 }
 
+.board-grid.explore-mode .grid-cell {
+  cursor: default;
+}
+
+.board-grid.explore-mode .grid-cell.grid-cell-active {
+  cursor: pointer;
+}
+
 .grid-cell {
   width: 92px;
   height: 92px;
@@ -268,7 +276,28 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+.grid-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 120ms ease;
+  background: linear-gradient(180deg, rgba(231, 125, 17, 0.22), rgba(231, 125, 17, 0.08));
+  pointer-events: none;
+}
+
+.board-grid:not(.explore-mode) .grid-cell:hover {
+  border-color: rgba(231, 125, 17, 0.38);
+  box-shadow: 0 0 0 1px rgba(231, 125, 17, 0.18);
+  transform: translateY(-1px);
+}
+
+.board-grid:not(.explore-mode) .grid-cell:hover::before {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(231, 125, 17, 0.08), rgba(0, 0, 0, 0.32));
 }
 
 .grid-cell-unexplored {
@@ -282,7 +311,25 @@
 .grid-cell-active {
   border-width: 2px;
   border-color: rgba(231, 125, 17, 0.95);
-  box-shadow: 0 0 0 2px rgba(231, 125, 17, 0.18);
+  box-shadow: 0 0 0 1px rgba(231, 125, 17, 0.45),
+    0 0 18px rgba(231, 125, 17, 0.22);
+}
+
+.grid-cell-active::before {
+  opacity: 1;
+}
+
+.board-grid.explore-mode .grid-cell-active:hover {
+  border-color: rgba(231, 125, 17, 0.95);
+  box-shadow: 0 0 0 1px rgba(231, 125, 17, 0.5),
+    0 0 20px rgba(231, 125, 17, 0.18),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  transform: translateY(0px);
+}
+
+.board-grid.explore-mode .grid-cell-active:hover::before {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.5));
 }
 
 .cell-inner {
@@ -292,6 +339,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: 1;
 }
 
 .cell-unknown {
@@ -308,11 +356,12 @@
 
 .cell-emoji-under {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 16px;
   opacity: 0.95;
-  z-index: 1;
+  z-index: 3;
 }
 
 .cell-heroes {
